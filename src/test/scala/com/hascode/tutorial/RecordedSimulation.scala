@@ -249,7 +249,7 @@ class RecordedSimulation extends Simulation {
     .exec(Login.login, Logout.logout)
 
   setUp(
-    //scenario1.inject(rampUsers(10) over (10 seconds)),
+    scenario1.inject(rampUsers(10) over (10 seconds)),
     scenario2.inject(rampUsers(2) over (10 seconds))).protocols(httpProtocol)
 }
 
