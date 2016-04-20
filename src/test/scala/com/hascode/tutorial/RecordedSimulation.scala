@@ -70,7 +70,7 @@ class RecordedSimulation extends Simulation {
 
 	val scn = scenario("RecordedSimulation")
 		.exec(http("request_0")
-			.get("/confluence/logout.action")
+			.get("/confluence/login.action")
 			.headers(headers_0)
 			.resources(http("request_1")
 			.get(uri1 + "/s/6c0981174e94142364564819dc0d1413-CDN/en_GB/5982/NOCACHE1/1.0/_/download/resources/confluence.web.resources:login/login.js?locale=en-GB")
