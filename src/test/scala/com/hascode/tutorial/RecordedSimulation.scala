@@ -70,7 +70,7 @@ class RecordedSimulation extends Simulation {
 
   object Login {
     val loginProperties = csv("user-login.csv").random
-    
+
     val login = exec(http("Login-form")
       .get("/confluence/login.action")
       .check(status.is(200))
@@ -105,7 +105,7 @@ class RecordedSimulation extends Simulation {
           .body(RawFileBody("RecordedSimulation_0009_request.txt"))))
       .pause(8)
       .feed(loginProperties)
-      .exec(http("request_10")
+      .exec(http("Login-User")
         .post("/confluence/dologin.action")
         .headers(headers_0)
         .formParam("os_username", "${username}")
@@ -143,69 +143,69 @@ class RecordedSimulation extends Simulation {
   }
 
   object DemonstrationSpace {
-    val space = exec(http("request_20")
+    val space = exec(http("DemonstrationSpace")
       .get("/confluence/display/ds")
       .headers(headers_0)
-      .resources(http("request_21")
+      .resources(http("color.css")
         .get(uri1 + "/s/en_GB/5982/NOCACHE1/4/_/styles/colors.css?spaceKey=ds")
         .headers(headers_2),
-        http("request_22")
+        http("batch.css")
           .get(uri1 + "/s/5d9e2ca98c4010be3e9ca6dbbc4726d7-CDN/en_GB/5982/NOCACHE1/84e42deaaeed87a3db69bb72f0824edc/_/download/contextbatch/css/page,viewcontent,plugin.quick.comment.pre,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.css?devtoolbar=true&highlightactions=true&flavour=VANILLA&isAdmin=true&locale=en-GB&user-logged-in=true")
           .headers(headers_2),
-        http("request_23")
+        http("raphael")
           .get(uri1 + "/s/db0b7591cfadbadc1dd90174b2a158c5-CDN/en_GB/5982/NOCACHE1/3/_/download/superbatch/js/batch.js?source=webContextStatic&atlassian.aui.raphael.disabled=true&locale=en-GB&build-number=5982")
           .headers(headers_1),
-        http("request_24")
+        http("batch.js")
           .get(uri1 + "/s/87bb1ec7afdb1ce3349e9efaade58ba8-CDN/en_GB/5982/NOCACHE1/84e42deaaeed87a3db69bb72f0824edc/_/download/contextbatch/js/page,viewcontent,plugin.quick.comment.pre,atl.general,main,pagebanner,atl.confluence.plugins.pagetree-desktop,atl.comments/batch.js?devtoolbar=true&highlightactions=true&isSystemAdministrator=true&flavour=VANILLA&analytics-enabled=true&isAdmin=true&locale=en-GB&user-logged-in=true&is-server-instance=true&hostenabled=true")
           .headers(headers_1),
-        http("request_25")
+        http("superbatch.css")
           .get(uri1 + "/s/43d467b830bb2d49d16b8efa994dc1dc-CDN/en_GB/5982/NOCACHE1/3/_/download/superbatch/css/batch.css?build-number=5982")
           .headers(headers_2),
-        http("request_26")
+        http("welcome-logo")
           .get(uri1 + "/download/attachments/98310/welcome.png?version=1&modificationDate=1433245783423&api=v2")
           .headers(headers_26),
-        http("request_27")
+        http("tips")
           .get(uri1 + "/rest/helptips/1.0/tips")
           .headers(headers_9),
-        http("request_28")
+        http("panel-items")
           .get(uri1 + "/rest/highlighting/1.0/panel-items?pageId=98310&_=1461157732634")
           .headers(headers_28),
-        http("request_29")
+        http("shortcuts")
           .get(uri1 + "/rest/shortcuts/latest/shortcuts/5982/8691841740820c37a8b7174830a427d4")
           .headers(headers_7),
-        http("request_30")
+        http("likes")
           .get(uri1 + "/rest/likes/1.0/content/98310/likes?commentLikes=true&_=1461157732636")
           .headers(headers_7),
-        http("request_31")
+        http("notifications")
           .get(uri1 + "/rest/mywork/latest/status/notification/count?pageid=98310&_=1461157732678")
           .headers(headers_7),
-        http("request_32")
+        http("dev-toolbar")
           .get(uri1 + "/plugins/servlet/dev-toolbar?_=1461157732674")
           .headers(headers_8),
-        http("request_33")
+        http("inlinecomments")
           .get(uri1 + "/rest/inlinecomments/1.0/comments?containerId=98310&_=1461157732710")
           .headers(headers_7),
-        http("request_34")
+        http("pagetree")
           .get(uri1 + "/plugins/pagetree/naturalchildren.action?decorator=none&excerpt=false&sort=position&reverse=false&disableLinks=false&expandCurrent=true&hasRoot=true&pageId=98310&treeId=0&startDepth=0&mobile=false&ancestors=98310&treePageId=98310&_=1461157732689")
           .headers(headers_34),
-        http("request_35")
+        http("editor")
           .get(uri1 + "/plugins/editor-loader/editor.action?parentPageId=&pageId=98310&spaceKey=ds&atl_after_login_redirect=%2Fconfluence%2Fdisplay%2Fds%2FWelcome%2Bto%2BConfluence&timeout=12000&_=1461157732865")
           .headers(headers_28),
-        http("request_36")
+        http("webressources")
           .post(uri1 + "/rest/webResources/1.0/resources")
           .headers(headers_9)
           .body(RawFileBody("RecordedSimulation_0036_request.txt")),
-        http("request_37")
+        http("analytics")
           .post(uri1 + "/rest/analytics/1.0/publish/bulk")
           .headers(headers_9)
           .body(RawFileBody("RecordedSimulation_0037_request.txt")),
-        http("request_38")
+        http("batch.js")
           .get(uri1 + "/s/305ab38d098e1f4aa76f13d17d17e01c-CDN/en_GB/5982/NOCACHE1/efc3cdb23fc3aff28b87897a738139b6/_/download/contextbatch/js/editor,macro-browser,fullpage-editor,-viewcontent,-atl.general,-plugin.quick.comment.pre,-page,-main,-atl.comments/batch.js?locale=en-GB")
           .headers(headers_1),
-        http("request_39")
+        http("macrobrowser")
           .get(uri1 + "/plugins/macrobrowser/browse-macros.action?detailed=false&macroMetadataClientCacheKey=1461155800856")
           .headers(headers_7),
-        http("request_40")
+        http("batch.css")
           .get(uri1 + "/s/d41d8cd98f00b204e9800998ecf8427e-CDN/en_GB/5982/NOCACHE1/efc3cdb23fc3aff28b87897a738139b6/_/download/contextbatch/css/editor,macro-browser,fullpage-editor,-viewcontent,-atl.general,-plugin.quick.comment.pre,-page,-main,-atl.comments/batch.css?media=%28max-width%3A+1450px%29")
           .headers(headers_2)))
       .pause(7)
