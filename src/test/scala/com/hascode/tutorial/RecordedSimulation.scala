@@ -68,11 +68,12 @@ class RecordedSimulation extends Simulation {
 
   val uri1 = "http://localhost:1990/confluence"
 
-  val scn = scenario("RecordedSimulation")
-    .exec(Login.login, DemonstrationSpace.space, Logout.logout)
   object Login {
+    val loginProperties = csv("user-login.csv").random
+    
     val login = exec(http("Login-form")
       .get("/confluence/login.action")
+      .check(status.is(200))
       .headers(headers_0)
       .resources(http("login.js")
         .get(uri1 + "/s/6c0981174e94142364564819dc0d1413-CDN/en_GB/5982/NOCACHE1/1.0/_/download/resources/confluence.web.resources:login/login.js?locale=en-GB")
@@ -103,11 +104,12 @@ class RecordedSimulation extends Simulation {
           .headers(headers_9)
           .body(RawFileBody("RecordedSimulation_0009_request.txt"))))
       .pause(8)
+      .feed(loginProperties)
       .exec(http("request_10")
         .post("/confluence/dologin.action")
         .headers(headers_0)
-        .formParam("os_username", "admin")
-        .formParam("os_password", "admin")
+        .formParam("os_username", "${username}")
+        .formParam("os_password", "${password}")
         .formParam("login", "Log in")
         .formParam("os_destination", "")
         .resources(http("batch.css")
@@ -239,7 +241,16 @@ class RecordedSimulation extends Simulation {
           .headers(headers_9)
           .body(RawFileBody("RecordedSimulation_0049_request.txt"))))
   }
-  setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
+
+  val scenario1 = scenario("ConfluenceUsageScenario")
+    .exec(Login.login, DemonstrationSpace.space, Logout.logout)
+
+  val scenario2 = scenario("ConfluenceLoginLogoutScenario")
+    .exec(Login.login, Logout.logout)
+
+  setUp(
+    //scenario1.inject(rampUsers(10) over (10 seconds)),
+    scenario2.inject(rampUsers(2) over (10 seconds))).protocols(httpProtocol)
 }
 
 
