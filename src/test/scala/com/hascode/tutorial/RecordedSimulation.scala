@@ -16,8 +16,6 @@ class RecordedSimulation extends Simulation {
     .acceptLanguageHeader("en-US")
     .userAgentHeader("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0")
 
-  val uri1 = "http://localhost:8080/hascode"
-
   object HomePage {
     val home = exec(http("StartPage")
       .get("/hascode"))
