@@ -16,34 +16,34 @@ class RecordedSimulation extends Simulation {
     .acceptLanguageHeader("en-US")
     .userAgentHeader("Mozilla/5.0 (X11; Ubuntu; Linux x86_64; rv:45.0) Gecko/20100101 Firefox/45.0")
 
-  val headers_0 = Map("REMOTE_USER" -> "admin")
-
   val uri1 = "http://localhost:8080/hascode"
 
   object HomePage {
     val home = exec(http("StartPage")
-      .get("/hascode")
-      .headers(headers_0))
+      .get("/hascode"))
       .pause(25)
   }
 
   object LoginPage {
-    val login = exec(http("LoginPage")
+    val loginProperties = csv("user-login.csv").random
+
+    val login = feed(loginProperties).exec(http("LoginPage")
       .post("/hascode/j_security_check")
-      .headers(headers_0)
-      .formParam("j_username", "admin")
-      .formParam("j_password", "test"))
+      .formParam("j_username", "${username}")
+      .formParam("j_password", "${password}"))
       .pause(3)
   }
 
   object UserInfoPage {
     val info = exec(http("UserInformation")
-      .get("/hascode/rs/session")
-      .headers(headers_0))
+      .get("/hascode/rs/session"))
   }
 
-  val scn = scenario("JavaMultiuserScenario")
+  val scenario1 = scenario("JavaMultiuserScenario")
     .exec(HomePage.home, LoginPage.login, UserInfoPage.info)
+    
+  val scenario2 = scenario("JavaMultiuserScenario")
+    .exec(HomePage.home, LoginPage.login)
 
-  setUp(scn.inject(atOnceUsers(1))).protocols(httpProtocol)
+  setUp(scenario1.inject(rampUsers(10) over (10 seconds), rampUsers(2) over (10 seconds))).protocols(httpProtocol)
 }
