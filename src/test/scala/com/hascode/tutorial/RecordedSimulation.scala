@@ -39,9 +39,11 @@ class RecordedSimulation extends Simulation {
 
   val scenario1 = scenario("JavaMultiuserScenario")
     .exec(HomePage.home, LoginPage.login, UserInfoPage.info)
-    
+
   val scenario2 = scenario("JavaMultiuserScenario")
     .exec(HomePage.home, LoginPage.login)
 
-  setUp(scenario1.inject(rampUsers(10) over (10 seconds), rampUsers(2) over (10 seconds))).protocols(httpProtocol)
+  setUp(scenario1.inject(rampUsers(10) over (10 seconds), rampUsers(2) over (10 seconds)))
+    .protocols(httpProtocol)
+    .assertions(global.successfulRequests.percent.is(100))
 }
