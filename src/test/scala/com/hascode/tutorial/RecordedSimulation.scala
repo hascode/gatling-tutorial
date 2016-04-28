@@ -145,6 +145,7 @@ class RecordedSimulation extends Simulation {
   object DemonstrationSpace {
     val space = exec(http("DemonstrationSpace")
       .get("/confluence/display/ds")
+      .check(regex("Welcome to Confluence").find(1).exists)
       .headers(headers_0)
       .resources(http("color.css")
         .get(uri1 + "/s/en_GB/5982/NOCACHE1/4/_/styles/colors.css?spaceKey=ds")
